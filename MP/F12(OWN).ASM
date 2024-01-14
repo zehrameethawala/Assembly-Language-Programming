@@ -1,0 +1,64 @@
+DOSSEG
+.MODEL SMALL
+.STACK 100H
+.DATA
+MES DB ':DIVIDED BY 17(QUOTIENT):$'
+Q DW ?
+
+.CODE
+MAIN PROC
+MOV AX,@DATA
+MOV DS,AX
+MOV BX,011B               
+AND BX,010B               ;BINARY NUMBER FOR 2
+MOV CX,8                  ;COUNTER
+MOV DX,BX
+ADD DX,48
+
+L1:
+MOV AH,2                  ;PRINT NUMBER
+INT 21H
+MOV AX,17                 ;DIVIDEND
+MOV DX,0
+DIV BX                    ;DIVIDE
+MOV Q,AX                  ;MOVING VALUE OF QUOTIENT IN Q
+MOV DX,OFFSET MES         ;PRINT STRING MESSAGE
+MOV AH,9
+INT 21H
+MOV DX,Q                  ;PRINT QUOTIENT
+ADD DX,48
+MOV AH,2
+INT 21H
+
+MOV DX,10                 ;NEWLINE FEED
+MOV AH,2
+INT 21H
+MOV DX,13                 ;CARRIAGE RETURN
+MOV AH,2
+INT 21H
+
+INC BX                    ;INCREMENT
+MOV DX,BX
+ADD DX,48
+
+
+LOOP L1
+MOV AH,4CH
+INT 21H
+MAIN ENDP
+END MAIN
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
